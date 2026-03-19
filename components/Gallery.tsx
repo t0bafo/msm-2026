@@ -87,7 +87,18 @@ export default function Gallery() {
         }
 
         const data = await response.json();
-        setImages(data);
+        
+        // Prioritize specific photos requested by the user
+        const featuredIds = ['6987', '6990', '7008', '6982'];
+        const sortedImages = [...data].sort((a, b) => {
+          const aIsFeatured = featuredIds.some(id => a.pathname.includes(id));
+          const bIsFeatured = featuredIds.some(id => b.pathname.includes(id));
+          if (aIsFeatured && !bIsFeatured) return -1;
+          if (!aIsFeatured && bIsFeatured) return 1;
+          return 0;
+        });
+        
+        setImages(sortedImages);
       } catch (err) {
         console.error('Gallery fetch error:', err);
         setError(err instanceof Error ? err.message : 'An unknown error occurred');
