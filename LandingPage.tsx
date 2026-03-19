@@ -153,7 +153,7 @@ const LandingPage: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <header className="relative min-h-[700px] md:h-[100svh] flex flex-col items-center justify-center overflow-hidden px-4 pt-20 md:pt-24 pb-32 md:pb-40">
+      <header className="relative min-h-[700px] md:h-[100svh] flex flex-col items-center justify-center overflow-hidden px-4 pt-20 md:pt-24 pb-80 md:pb-96">
         <motion.div style={{ y, opacity }} className="z-10 text-center flex flex-col items-center w-full max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -166,11 +166,11 @@ const LandingPage: React.FC = () => {
             <span>July 17–19, 2026</span>
           </motion.div>
 
-          <div className="relative w-full flex justify-center items-center px-4">
+          <div className="relative w-full flex justify-center items-center px-4 mt-96 md:mt-[120px]">
             <GradientText 
               text="MID-SUMMER MADNESS" 
               as="h1" 
-              className="text-[10vw] md:text-[10vw] leading-[0.85] font-black tracking-tighter text-center uppercase break-words" 
+              className="text-[10vw] md:text-[8vw] leading-[0.85] font-black tracking-tighter text-center uppercase break-words" 
             />
           </div>
           
@@ -178,14 +178,14 @@ const LandingPage: React.FC = () => {
              initial={{ scaleX: 0 }}
              animate={{ scaleX: 1 }}
              transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
-             className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-white/30 to-transparent mt-8 md:mt-10 mb-8 md:mb-10"
+             className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-white/30 to-transparent mt-12 md:mt-16 mb-12 md:mb-16"
           />
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 1 }}
-            className="text-sm md:text-lg font-light max-w-2xl mx-auto text-white/80 leading-relaxed drop-shadow-lg px-4"
+            className="text-sm md:text-lg font-light max-w-2xl mx-auto text-white/80 leading-relaxed drop-shadow-lg px-4 mt-80 md:mt-96"
           >
             Three days. Three distinct experiences. One cultural moment. MSM brings together 1,100 attendees for a weekend where music, fashion, and design converge.
           </motion.p>
@@ -194,7 +194,7 @@ const LandingPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 1 }}
-            className="flex flex-col md:flex-row gap-4 mt-8"
+            className="flex flex-col md:flex-row gap-4 mt-[120px] md:mt-[160px]"
           >
             <button 
               onClick={() => scrollToSection('partnership')}
