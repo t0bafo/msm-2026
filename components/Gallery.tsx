@@ -31,10 +31,25 @@ export default function Gallery() {
     async function fetchGallery() {
       try {
         const response = await fetch('/api/gallery');
+        const contentType = response.headers.get('content-type');
+        
         if (!response.ok) {
-          const data = await response.json();
-          throw new Error(data.error || 'Failed to fetch gallery');
+          if (contentType && contentType.includes('application/json')) {
+            const data = await response.json();
+            throw new Error(data.error || `Server error: ${response.status}`);
+          } else {
+            const text = await response.text();
+            console.error('Non-JSON error response:', text);
+            throw new Error(`API returned non-JSON response (${response.status}). The server might not be running correctly.`);
+          }
         }
+
+        if (!contentType || !contentType.includes('application/json')) {
+          const text = await response.text();
+          console.error('Expected JSON, got:', text);
+          throw new Error('API returned non-JSON response. Please check if the server is running server.ts.');
+        }
+
         const data = await response.json();
         setImages(data);
       } catch (err) {
