@@ -102,8 +102,8 @@ const App: React.FC = () => {
       <nav className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 md:px-12 py-6 mix-blend-difference">
         <div className="font-heading text-xl md:text-2xl font-bold tracking-tighter text-white cursor-default z-50">MSM 2026</div>
         
-        {/* Desktop Menu */}
-        <div className="hidden md:flex gap-10 text-[10px] font-bold tracking-[0.3em] uppercase">
+        {/* Desktop Menu - Hidden to prioritize Date/City Box */}
+        <div className="hidden">
           {['About', 'Weekend', 'Success', 'Partnership'].map((item) => (
             <button 
               key={item} 
@@ -115,15 +115,23 @@ const App: React.FC = () => {
             </button>
           ))}
         </div>
-        <button 
-          onClick={() => scrollToSection('partnership')}
-          className="hidden md:inline-block border border-white/30 px-8 py-3 text-[10px] font-bold tracking-[0.3em] uppercase hover:bg-white hover:text-black transition-all duration-300 text-white cursor-pointer bg-transparent backdrop-blur-sm"
-          data-hover="true"
-        >
-          Inquiry
-        </button>
+        <div className="hidden md:flex items-center gap-4">
+          <button 
+            onClick={() => scrollToSection('partnership')}
+            className="border border-white/30 px-8 py-3 text-[10px] font-bold tracking-[0.3em] uppercase hover:bg-white hover:text-black transition-all duration-300 text-white cursor-pointer bg-transparent backdrop-blur-sm"
+            data-hover="true"
+          >
+            Inquiry
+          </button>
+          <button 
+            className="text-white z-50 relative w-10 h-10 flex items-center justify-center hover:text-[#a8fbd3] transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+             {mobileMenuOpen ? <X /> : <Menu />}
+          </button>
+        </div>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Menu Toggle (Always visible now) */}
         <button 
           className="md:hidden text-white z-50 relative w-10 h-10 flex items-center justify-center"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -132,27 +140,33 @@ const App: React.FC = () => {
         </button>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile/Global Menu Overlay */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-30 bg-[#31326f]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
+            className="fixed inset-0 z-50 bg-[#31326f]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8"
           >
+            <button 
+              className="absolute top-6 right-6 md:right-12 text-white w-10 h-10 flex items-center justify-center"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <X size={32} />
+            </button>
             {['About', 'Weekend', 'Success', 'Partnership'].map((item) => (
               <button
                 key={item}
                 onClick={() => scrollToSection(item.toLowerCase())}
-                className="text-3xl font-heading font-bold text-white hover:text-[#a8fbd3] transition-colors uppercase bg-transparent border-none tracking-widest"
+                className="text-3xl md:text-5xl font-heading font-bold text-white hover:text-[#a8fbd3] transition-colors uppercase bg-transparent border-none tracking-widest"
               >
                 {item}
               </button>
             ))}
             <button 
               onClick={() => scrollToSection('partnership')}
-              className="mt-8 border border-white px-10 py-4 text-xs font-bold tracking-widest uppercase bg-white text-black"
+              className="mt-8 border border-white px-10 py-4 text-xs md:text-sm font-bold tracking-widest uppercase bg-white text-black hover:bg-[#a8fbd3] transition-colors"
             >
               Partnership Inquiry
             </button>
@@ -165,10 +179,10 @@ const App: React.FC = () => {
       </AnimatePresence>
 
       {/* HERO SECTION */}
-      <header className="relative h-[100svh] min-h-[700px] flex flex-col items-center justify-center overflow-hidden px-4 pt-20 md:pt-24">
+      <header className="relative min-h-[800px] md:h-[110svh] flex flex-col items-center justify-center overflow-hidden px-4 pt-32 pb-40 md:pt-40 md:pb-48">
         <motion.div 
           style={{ y, opacity }}
-          className="z-10 text-center flex flex-col items-center w-full max-w-6xl pb-24 md:pb-20"
+          className="z-10 text-center flex flex-col items-center w-full max-w-6xl"
         >
            {/* Date / Location */}
           <motion.div
