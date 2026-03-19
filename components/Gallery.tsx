@@ -333,9 +333,6 @@ export default function Gallery() {
                 referrerPolicy="no-referrer"
               />
               <div className="mt-8 text-center">
-                <p className="text-white font-heading text-xl uppercase tracking-widest mb-2">
-                  {selectedImage.pathname.split('/').pop()?.split('.')[0] || 'Festival Moment'}
-                </p>
                 <p className="text-[#a8fbd3] font-mono text-[10px] uppercase tracking-[0.3em]">
                   Captured: {new Date(selectedImage.uploadedAt).toLocaleString()}
                 </p>
