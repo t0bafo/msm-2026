@@ -89,12 +89,19 @@ export default function Gallery() {
         const data = await response.json();
         
         // Prioritize specific photos requested by the user
-        const featuredIds = ['6987', '6990', '7008', '6982'];
-        const sortedImages = [...data].sort((a, b) => {
+        const featuredIds = ['6990', '6982', '6968', '6918', '6912', '6943', '7008', '6955', '6924', '6987'];
+        const sortedImages = [...data.images].sort((a, b) => {
           const aIsFeatured = featuredIds.some(id => a.pathname.includes(id));
           const bIsFeatured = featuredIds.some(id => b.pathname.includes(id));
           if (aIsFeatured && !bIsFeatured) return -1;
           if (!aIsFeatured && bIsFeatured) return 1;
+          
+          // If both are featured, maintain their relative order from the featuredIds list
+          if (aIsFeatured && bIsFeatured) {
+            const aIndex = featuredIds.findIndex(id => a.pathname.includes(id));
+            const bIndex = featuredIds.findIndex(id => b.pathname.includes(id));
+            return aIndex - bIndex;
+          }
           return 0;
         });
         
@@ -110,7 +117,7 @@ export default function Gallery() {
     fetchGallery();
   }, []);
 
-  const previewImages = images.slice(0, 6);
+  const previewImages = images.slice(0, 10);
 
   if (loading) {
     return (
@@ -225,7 +232,7 @@ export default function Gallery() {
                 <img
                   src={image.url}
                   alt={image.pathname}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover object-[center_top] transition-transform duration-700 group-hover:scale-110"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -305,7 +312,7 @@ export default function Gallery() {
                         <img
                           src={image.url}
                           alt={image.pathname}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          className="w-full h-full object-cover object-[center_top] transition-transform duration-700 group-hover:scale-110"
                           referrerPolicy="no-referrer"
                         />
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
