@@ -438,9 +438,12 @@ const App: React.FC = () => {
               </div>
 
               <div className="flex flex-col md:flex-row gap-4">
-                <button className="bg-white text-black px-10 py-4 text-[10px] font-bold tracking-[0.3em] uppercase hover:bg-[#a8fbd3] transition-colors duration-300">
+                <a 
+                  href="tel:8178810335"
+                  className="bg-white text-black px-10 py-4 text-[10px] font-bold tracking-[0.3em] uppercase hover:bg-[#a8fbd3] transition-colors duration-300 flex items-center justify-center"
+                >
                   Schedule a Call
-                </button>
+                </a>
                 <a 
                   href="https://drive.google.com/uc?export=download&id=1NFKqsA9XgoV8zPsngttlg3NcFmYSGspx"
                   target="_blank"
