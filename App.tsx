@@ -165,7 +165,7 @@ const App: React.FC = () => {
       </AnimatePresence>
 
       {/* HERO SECTION */}
-      <header className="relative h-[100svh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden px-4">
+      <header className="relative h-[100svh] min-h-[700px] flex flex-col items-center justify-center overflow-hidden px-4 pt-20 md:pt-24">
         <motion.div 
           style={{ y, opacity }}
           className="z-10 text-center flex flex-col items-center w-full max-w-6xl pb-24 md:pb-20"
@@ -175,7 +175,7 @@ const App: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="flex items-center gap-3 md:gap-6 text-[10px] md:text-xs font-mono text-[#a8fbd3] tracking-[0.3em] uppercase mb-6 bg-black/40 px-6 py-2 rounded-full backdrop-blur-md border border-white/10"
+            className="flex items-center gap-3 md:gap-6 text-[10px] md:text-xs font-mono text-[#a8fbd3] tracking-[0.3em] uppercase mb-10 md:mb-16 bg-black/40 px-6 py-2 rounded-full backdrop-blur-md border border-white/10"
           >
             <span>Dallas, TX</span>
             <span className="w-1.5 h-1.5 bg-[#4fb7b3] rounded-full animate-pulse"/>
@@ -195,7 +195,7 @@ const App: React.FC = () => {
              initial={{ scaleX: 0 }}
              animate={{ scaleX: 1 }}
              transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
-             className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-white/30 to-transparent mt-8 mb-8"
+             className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-white/30 to-transparent mt-12 md:mt-16 mb-12 md:mb-16"
           />
 
           <motion.p
