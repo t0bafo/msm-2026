@@ -88,6 +88,11 @@ export default function Gallery() {
 
         const data = await response.json();
         
+        if (!data || !Array.isArray(data.images)) {
+          console.error('Invalid gallery data received:', data);
+          throw new Error('Gallery API returned invalid data format. Please check your BLOB_READ_WRITE_TOKEN.');
+        }
+        
         // Prioritize specific photos requested by the user
         const featuredIds = ['6990', '6982', '6968', '6918', '6912', '6943', '7008', '6955', '6924', '6919', '6987'];
         const sortedImages = [...data.images].sort((a, b) => {

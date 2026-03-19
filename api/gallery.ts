@@ -13,6 +13,8 @@ export default async function handler(req: any, res: any) {
     const { blobs } = await list({ token });
     console.log(`Found ${blobs.length} blobs`);
     
+    const logo = blobs.find(b => b.pathname.includes('APOLLO MSM LOGO.png'));
+    
     // Filter for common image formats
     const images = blobs
       .filter(blob => blob.pathname.match(/\.(jpg|jpeg|png|webp|gif)$/i))
@@ -24,7 +26,7 @@ export default async function handler(req: any, res: any) {
       }));
 
     console.log(`Returning ${images.length} images`);
-    res.json(images);
+    res.json({ images, logoUrl: logo?.url });
   } catch (error) {
     console.error("Error listing blobs:", error);
     res.status(500).json({ 
