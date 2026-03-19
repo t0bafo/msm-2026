@@ -556,7 +556,12 @@ const App: React.FC = () => {
           </div>
           
           <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="font-heading text-xl font-bold tracking-tighter text-white">MSM 2026</div>
+            <button 
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="font-heading text-xl font-bold tracking-tighter text-white hover:text-[#a8fbd3] transition-colors bg-transparent border-none p-0 cursor-pointer"
+            >
+              MSM 2026
+            </button>
             <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest">
               © 2026 Apollo Wrldx. All rights reserved.
             </div>

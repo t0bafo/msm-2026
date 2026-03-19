@@ -316,6 +316,28 @@ export default function Gallery() {
                   })}
                 </div>
 
+                {/* Bottom Exit Button */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="mt-24 pb-24 flex flex-col items-center text-center"
+                >
+                  <div className="w-px h-20 bg-gradient-to-b from-[#a8fbd3] to-transparent mb-8" />
+                  <button 
+                    onClick={() => setShowArchive(false)}
+                    className="group relative px-12 py-5 border border-white/10 overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-[#a8fbd3] translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                    <span className="relative z-10 text-[10px] font-bold tracking-[0.5em] uppercase group-hover:text-black transition-colors duration-500">
+                      Back to Experience
+                    </span>
+                  </button>
+                  <p className="mt-6 text-white/30 text-[8px] font-mono uppercase tracking-[0.3em]">
+                    End of Archive
+                  </p>
+                </motion.div>
+
               </div>
             </div>
           </motion.div>
