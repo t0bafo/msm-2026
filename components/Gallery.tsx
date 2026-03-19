@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Maximize2, Camera, AlertCircle } from 'lucide-react';
+import { X, Maximize2, Camera, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface GalleryImage {
   url: string;
@@ -13,11 +13,11 @@ export default function Gallery() {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [showArchive, setShowArchive] = useState(false);
 
   useEffect(() => {
-    if (showArchive || selectedImage) {
+    if (showArchive || selectedIndex !== null) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -25,7 +25,28 @@ export default function Gallery() {
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [showArchive, selectedImage]);
+  }, [showArchive, selectedIndex]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedIndex === null) return;
+      if (e.key === 'ArrowRight') handleNext();
+      if (e.key === 'ArrowLeft') handlePrev();
+      if (e.key === 'Escape') setSelectedIndex(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedIndex]);
+
+  const handleNext = () => {
+    if (selectedIndex === null) return;
+    setSelectedIndex((selectedIndex + 1) % images.length);
+  };
+
+  const handlePrev = () => {
+    if (selectedIndex === null) return;
+    setSelectedIndex((selectedIndex - 1 + images.length) % images.length);
+  };
 
   useEffect(() => {
     async function checkHealth() {
@@ -183,7 +204,7 @@ export default function Gallery() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
-                onClick={() => setSelectedImage(image)}
+                onClick={() => setSelectedIndex(index)}
                 className={`group relative overflow-hidden cursor-pointer rounded-sm bg-white/5 ${
                   isLarge ? 'col-span-2 row-span-2' : 
                   isTall ? 'row-span-2' : 
@@ -220,9 +241,6 @@ export default function Gallery() {
                 Explore Full Archive
               </span>
             </button>
-            <p className="mt-6 text-[8px] font-mono text-white/20 uppercase tracking-[0.3em]">
-              {images.length - 6} more moments waiting
-            </p>
           </motion.div>
         )}
       </div>
@@ -266,7 +284,7 @@ export default function Gallery() {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: index * 0.02 }}
-                        onClick={() => setSelectedImage(image)}
+                        onClick={() => setSelectedIndex(index)}
                         className={`group relative overflow-hidden cursor-pointer rounded-sm bg-white/5 ${
                           isLarge ? 'col-span-2 row-span-2' : 
                           isTall ? 'row-span-2' : 
@@ -287,15 +305,6 @@ export default function Gallery() {
                   })}
                 </div>
 
-                <div className="mt-24 pb-12 flex flex-col items-center text-center">
-                  <p className="text-white/20 font-mono text-[10px] uppercase tracking-[0.5em] mb-8">End of Archive</p>
-                  <button 
-                    onClick={() => setShowArchive(false)}
-                    className="px-8 py-3 border border-white/10 text-white/50 hover:text-white hover:border-white transition-all text-[10px] font-bold tracking-widest uppercase"
-                  >
-                    Back to Main Site
-                  </button>
-                </div>
               </div>
             </div>
           </motion.div>
@@ -303,38 +312,71 @@ export default function Gallery() {
       </AnimatePresence>
 
       {/* Lightbox */}
-      <AnimatePresence>
-        {selectedImage && (
+      <AnimatePresence mode="wait">
+        {selectedIndex !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[120] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12"
-            onClick={() => setSelectedImage(null)}
+            className="fixed inset-0 z-[120] bg-black/95 backdrop-blur-xl flex items-center justify-center"
+            onClick={() => setSelectedIndex(null)}
           >
             <button 
-              className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors"
-              onClick={() => setSelectedImage(null)}
+              className="absolute top-8 right-8 z-[130] text-white/50 hover:text-white transition-colors p-2"
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedIndex(null);
+              }}
             >
               <X size={32} />
             </button>
+
+            {/* Navigation Arrows */}
+            <button
+              className="absolute left-4 md:left-8 z-[130] text-white/30 hover:text-white transition-colors p-4"
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePrev();
+              }}
+            >
+              <ChevronLeft size={48} />
+            </button>
+
+            <button
+              className="absolute right-4 md:right-8 z-[130] text-white/30 hover:text-white transition-colors p-4"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNext();
+              }}
+            >
+              <ChevronRight size={48} />
+            </button>
             
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative max-w-5xl w-full max-h-full flex flex-col items-center"
+              key={selectedIndex}
+              initial={{ x: 100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -100, opacity: 0 }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(_, info) => {
+                if (info.offset.x > 100) handlePrev();
+                else if (info.offset.x < -100) handleNext();
+              }}
+              className="relative max-w-5xl w-full max-h-full flex flex-col items-center p-4"
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src={selectedImage.url}
-                alt={selectedImage.pathname}
-                className="max-w-full max-h-[80vh] object-contain rounded-sm shadow-2xl"
+                src={images[selectedIndex].url}
+                alt={images[selectedIndex].pathname}
+                className="max-w-full max-h-[85vh] object-contain rounded-sm shadow-2xl select-none"
                 referrerPolicy="no-referrer"
+                draggable={false}
               />
               <div className="mt-8 text-center">
                 <p className="text-[#a8fbd3] font-mono text-[10px] uppercase tracking-[0.3em]">
-                  Captured: {new Date(selectedImage.uploadedAt).toLocaleString()}
+                  Captured: {new Date(images[selectedIndex].uploadedAt).toLocaleString()}
                 </p>
               </div>
             </motion.div>
