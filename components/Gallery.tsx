@@ -28,6 +28,21 @@ export default function Gallery() {
   }, [showArchive, selectedImage]);
 
   useEffect(() => {
+    async function checkHealth() {
+      try {
+        const res = await fetch('/api/health');
+        if (res.ok) {
+          const data = await res.json();
+          console.log('Server health check:', data);
+        } else {
+          console.error('Server health check failed:', res.status);
+        }
+      } catch (err) {
+        console.error('Server health check error:', err);
+      }
+    }
+    checkHealth();
+
     async function fetchGallery() {
       try {
         const response = await fetch('/api/gallery');
@@ -85,7 +100,9 @@ export default function Gallery() {
           <p className="text-white/60 text-sm max-w-md">
             {error.includes('BLOB_READ_WRITE_TOKEN') 
               ? "Your Vercel Blob token is missing. Please add BLOB_READ_WRITE_TOKEN to the Secrets menu (⚙️ gear icon) to enable the gallery."
-              : error}
+              : error.includes('404')
+                ? "API Route not found (404). Please ensure server.ts is running correctly and handling /api routes."
+                : error}
           </p>
           <div className="mt-4 p-4 bg-black/40 rounded-lg text-left w-full">
             <p className="text-[10px] font-mono text-[#a8fbd3] uppercase tracking-widest mb-2">Setup Instructions:</p>

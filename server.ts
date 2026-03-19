@@ -1,3 +1,4 @@
+console.log("SERVER.TS ENTRY POINT REACHED");
 import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
@@ -8,14 +9,21 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function startServer() {
-  console.log("Starting server.ts...");
+  console.log("Starting server.ts - VERSION 2.1 - DEBUGGING 404...");
   try {
     const app = express();
     const PORT = 3000;
 
+    // Request logging middleware
+    app.use((req, res, next) => {
+      console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+      next();
+    });
+
     // Health check route
     app.get("/api/health", (req, res) => {
-      res.json({ status: "ok", timestamp: new Date().toISOString() });
+      console.log("Health check hit");
+      res.json({ status: "ok", timestamp: new Date().toISOString(), env: process.env.NODE_ENV });
     });
 
     // API Route to list gallery images from Vercel Blob
@@ -53,19 +61,35 @@ async function startServer() {
       }
     });
 
+    // 404 handler for /api routes
+    app.all("/api/*", (req, res) => {
+      console.log(`404 - API Route not found: ${req.method} ${req.url}`);
+      res.status(404).json({ error: `API Route not found: ${req.method} ${req.url}` });
+    });
+
     // Vite middleware for development
     if (process.env.NODE_ENV !== "production") {
-      console.log("Initializing Vite middleware...");
-      const vite = await createViteServer({
-        server: { middlewareMode: true },
-        appType: "spa",
-      });
-      app.use(vite.middlewares);
-      console.log("Vite middleware initialized");
+      console.log("Initializing Vite middleware with appType: spa...");
+      try {
+        const vite = await createViteServer({
+          server: { 
+            middlewareMode: true,
+            hmr: false // Disable HMR to prevent potential hangs
+          },
+          appType: "spa",
+          logLevel: 'info'
+        });
+        console.log("Vite server created successfully");
+        app.use(vite.middlewares);
+        console.log("Vite middleware attached to Express");
+      } catch (viteError) {
+        console.error("ERROR: Failed to create Vite server:", viteError);
+      }
     } else {
       console.log("Running in production mode");
       const distPath = path.join(process.cwd(), 'dist');
       app.use(express.static(distPath));
+      // Standard catch-all for Express 5 to serve SPA
       app.get('*all', (req, res) => {
         res.sendFile(path.join(distPath, 'index.html'));
       });
@@ -73,7 +97,6 @@ async function startServer() {
 
     app.listen(PORT, "0.0.0.0", () => {
       console.log(`Server listening on 0.0.0.0:${PORT}`);
-      console.log(`Server running on http://localhost:${PORT}`);
     });
   } catch (error) {
     console.error("FATAL: Failed to start server:", error);

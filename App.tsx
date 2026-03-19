@@ -49,6 +49,7 @@ const WEEKEND_EVENTS: Event[] = [
 ];
 
 const App: React.FC = () => {
+  console.log("APP.TSX RENDERING");
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
@@ -330,8 +331,8 @@ const App: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-24">
              <div className="max-w-2xl md:max-w-none w-full">
                <h2 className="text-[10px] font-mono text-[#a8fbd3] tracking-[0.4em] uppercase mb-6">The Weekend</h2>
-               <h3 className="text-4xl sm:text-5xl md:text-[7vw] lg:text-[8vw] font-heading font-bold uppercase leading-[0.9] mb-8 tracking-tighter">
-                 Three Days. <br className="md:hidden" /> 
+               <h3 className="text-4xl sm:text-5xl md:text-[6vw] lg:text-[7vw] font-heading font-bold uppercase leading-[0.9] mb-8 tracking-tighter md:whitespace-nowrap">
+                 Three Days. <br className="md:hidden" />
                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a8fbd3] to-[#4fb7b3] md:ml-4">Three Experiences.</span>
                </h3>
                <p className="text-white/50 text-sm md:text-lg uppercase tracking-widest">One Journey.</p>
