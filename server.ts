@@ -39,6 +39,14 @@ async function startServer() {
         console.log("Fetching blobs from Vercel...");
         const { blobs } = await list({ token });
         console.log(`Found ${blobs.length} blobs`);
+
+        const logo = blobs.find(b => b.pathname.includes('APOLLO MSM LOGO.png'));
+        if (logo) {
+          console.log("LOGO URL FOUND:", logo.url);
+          import('fs').then(fs => fs.writeFileSync('logo-url.txt', logo.url));
+        } else {
+          console.log("LOGO URL NOT FOUND in blobs");
+        }
         
         // Filter for common image formats
         const images = blobs
@@ -51,7 +59,7 @@ async function startServer() {
           }));
 
         console.log(`Returning ${images.length} images`);
-        res.json(images);
+        res.json({ images, logoUrl: logo?.url });
       } catch (error) {
         console.error("Error listing blobs:", error);
         res.status(500).json({ 
@@ -62,7 +70,7 @@ async function startServer() {
     });
 
     // 404 handler for /api routes
-    app.all("/api/*", (req, res) => {
+    app.all("/api/*all", (req, res) => {
       console.log(`404 - API Route not found: ${req.method} ${req.url}`);
       res.status(404).json({ error: `API Route not found: ${req.method} ${req.url}` });
     });
