@@ -89,7 +89,7 @@ export default function Gallery() {
         const data = await response.json();
         
         // Prioritize specific photos requested by the user
-        const featuredIds = ['6990', '6982', '6968', '6918', '6912', '6943', '7008', '6955', '6924', '6987'];
+        const featuredIds = ['6990', '6982', '6968', '6918', '6912', '6943', '7008', '6955', '6924', '6919', '6987'];
         const sortedImages = [...data.images].sort((a, b) => {
           const aIsFeatured = featuredIds.some(id => a.pathname.includes(id));
           const bIsFeatured = featuredIds.some(id => b.pathname.includes(id));
@@ -117,7 +117,7 @@ export default function Gallery() {
     fetchGallery();
   }, []);
 
-  const previewImages = images.slice(0, 10);
+  const previewImages = images.slice(0, 11);
 
   if (loading) {
     return (
@@ -209,11 +209,22 @@ export default function Gallery() {
         </div>
 
         {/* Preview Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px] md:auto-rows-[250px]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[250px] md:auto-rows-[320px]">
           {previewImages.map((image, index) => {
-            const isLarge = index % 7 === 0;
-            const isTall = index % 7 === 2;
-            const isWide = index % 7 === 5;
+            // Optimized grid pattern for 10 portrait-heavy images
+            const gridClasses = [
+              'md:col-span-2 md:row-span-2', // 0: 6990 (Large)
+              'md:col-span-1 md:row-span-1', // 1: 6982
+              'md:col-span-1 md:row-span-2', // 2: 6968 (Tall)
+              'md:col-span-1 md:row-span-1', // 3: 6918
+              'md:col-span-1 md:row-span-1', // 4: 6912
+              'md:col-span-2 md:row-span-1', // 5: 6943 (Wide)
+              'md:col-span-1 md:row-span-1', // 6: 7008
+              'md:col-span-2 md:row-span-2', // 7: 6955 (Large)
+              'md:col-span-1 md:row-span-1', // 8: 6924
+              'md:col-span-1 md:row-span-2', // 9: 6919 (Tall)
+              'md:col-span-1 md:row-span-1', // 10: 6987
+            ];
 
             return (
               <motion.div
@@ -223,16 +234,12 @@ export default function Gallery() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
                 onClick={() => setSelectedIndex(index)}
-                className={`group relative overflow-hidden cursor-pointer rounded-sm bg-white/5 ${
-                  isLarge ? 'col-span-2 row-span-2' : 
-                  isTall ? 'row-span-2' : 
-                  isWide ? 'col-span-2' : ''
-                }`}
+                className={`group relative overflow-hidden cursor-pointer rounded-sm bg-white/5 ${gridClasses[index] || ''}`}
               >
                 <img
                   src={image.url}
                   alt={image.pathname}
-                  className="w-full h-full object-cover object-[center_top] transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover object-[50%_15%] transition-transform duration-700 group-hover:scale-110"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">

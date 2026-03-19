@@ -55,6 +55,17 @@ const App: React.FC = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  
+  // Fetch logo from gallery API
+  useEffect(() => {
+    fetch('/api/gallery')
+      .then(res => res.json())
+      .then(data => {
+        if (data.logoUrl) setLogoUrl(data.logoUrl);
+      })
+      .catch(err => console.error('Error fetching logo:', err));
+  }, []);
   
   // Handle keyboard navigation for event modal
   useEffect(() => {
@@ -104,10 +115,19 @@ const App: React.FC = () => {
       <nav className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 md:px-12 py-6 mix-blend-difference">
         <button 
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="font-heading text-xl md:text-2xl font-bold tracking-tighter text-white cursor-pointer z-50 bg-transparent border-none p-0"
+          className="font-heading text-xl md:text-2xl font-bold tracking-tighter text-white cursor-pointer z-50 bg-transparent border-none p-0 flex items-center gap-3"
           data-hover="true"
         >
-          MSM 2026
+          {logoUrl ? (
+            <img 
+              src={logoUrl} 
+              alt="MSM 2026" 
+              className="h-8 md:h-10 w-auto object-contain"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            "MSM 2026"
+          )}
         </button>
         
         {/* Desktop Menu - Hidden to prioritize Date/City Box */}

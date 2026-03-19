@@ -40,10 +40,9 @@ async function startServer() {
         const { blobs } = await list({ token });
         console.log(`Found ${blobs.length} blobs`);
 
-        const logo = blobs.find(b => b.pathname.includes('APOLLO MSM LOGO.png'));
+        const logo = blobs.find(b => b.pathname.includes('6953'));
         if (logo) {
           console.log("LOGO URL FOUND:", logo.url);
-          import('fs').then(fs => fs.writeFileSync('logo-url.txt', logo.url));
         } else {
           console.log("LOGO URL NOT FOUND in blobs");
         }
