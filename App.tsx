@@ -6,7 +6,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Ticket, Globe, Zap, Music, MapPin, Menu, X, Calendar, Play, ChevronLeft, ChevronRight, Clock, Users, ArrowUpRight, Instagram, Mail } from 'lucide-react';
+import { Ticket, Globe, Zap, Music, MapPin, Menu, X, Calendar, Play, ChevronLeft, ChevronRight, Clock, Users, ArrowUpRight, Instagram, Mail, Phone } from 'lucide-react';
 import FluidBackground from './components/FluidBackground';
 import GradientText from './components/GlitchText';
 import CustomCursor from './components/CustomCursor';
@@ -439,7 +439,9 @@ const App: React.FC = () => {
 
               <div className="flex flex-col md:flex-row gap-4">
                 <a 
-                  href="tel:8178810335"
+                  href="https://calendar.app.google/wHtLKUZvT42mJ9Sg7"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-white text-black px-10 py-4 text-[10px] font-bold tracking-[0.3em] uppercase hover:bg-[#a8fbd3] transition-colors duration-300 flex items-center justify-center"
                 >
                   Schedule a Call
@@ -482,12 +484,12 @@ const App: React.FC = () => {
             Apollo Wrldx is a creative agency and experiential production partner building cultural infrastructure for diaspora communities. We've produced 30+ events across NYC, Dallas, and Atlanta, reaching 8,000+ attendees. Our work focuses on the intersection of music, fashion, and design, creating spaces where creativity thrives.
           </p>
           <a 
-            href="https://apollowrldx.com" 
+            href="https://msm.apollowrldx.com" 
             target="_blank" 
             rel="noopener noreferrer"
             className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#a8fbd3] hover:text-white transition-colors"
           >
-            Learn more at apollowrldx.com
+            Learn more at msm.apollowrldx.com
           </a>
         </div>
       </section>
@@ -501,7 +503,7 @@ const App: React.FC = () => {
                 Interested in sponsoring MSM 2026 or working with Apollo on your next campaign? Let's talk.
               </p>
               <a 
-                href="mailto:tobi@apollowrldx.com"
+                href="mailto:msm@apollowrldx.com"
                 className="inline-block text-[10px] font-bold tracking-[0.4em] uppercase border-b border-[#a8fbd3] pb-2 text-[#a8fbd3] hover:text-white hover:border-white transition-all"
               >
                 Get in Touch
@@ -518,16 +520,16 @@ const App: React.FC = () => {
                     </div>
                     <div>
                       <span className="block text-[10px] font-mono text-white/30 uppercase tracking-widest mb-1">Email</span>
-                      <a href="mailto:tobi@apollowrldx.com" className="text-sm hover:text-[#a8fbd3] transition-colors">tobi@apollowrldx.com</a>
+                      <a href="mailto:msm@apollowrldx.com" className="text-sm text-blue-400 hover:text-[#a8fbd3] transition-colors">msm@apollowrldx.com</a>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#a8fbd3]">
-                      <Users className="w-4 h-4" />
+                      <Phone className="w-4 h-4" />
                     </div>
                     <div>
                       <span className="block text-[10px] font-mono text-white/30 uppercase tracking-widest mb-1">Direct</span>
-                      <p className="text-sm">Tobi Afolayan</p>
+                      <a href="tel:8178810335" className="text-sm text-blue-400 hover:text-[#a8fbd3] transition-colors">Tobi Afolayan</a>
                     </div>
                   </div>
                 </div>
@@ -541,7 +543,7 @@ const App: React.FC = () => {
                     </div>
                     <div>
                       <span className="block text-[10px] font-mono text-white/30 uppercase tracking-widest mb-1">Instagram</span>
-                      <a href="https://www.instagram.com/apollowrldx/" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-[#a8fbd3] transition-colors">@apollowrldx</a>
+                      <a href="https://www.instagram.com/apollowrldx/" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-400 hover:text-[#a8fbd3] transition-colors">@apollowrldx</a>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -550,7 +552,7 @@ const App: React.FC = () => {
                     </div>
                     <div>
                       <span className="block text-[10px] font-mono text-white/30 uppercase tracking-widest mb-1">Website</span>
-                      <a href="https://apollowrldx.com" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-[#a8fbd3] transition-colors">apollowrldx.com</a>
+                      <a href="https://msm.apollowrldx.com" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-400 hover:text-[#a8fbd3] transition-colors">msm.apollowrldx.com</a>
                     </div>
                   </div>
                 </div>
