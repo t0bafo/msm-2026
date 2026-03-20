@@ -468,7 +468,7 @@ export default function Gallery() {
               />
               <div className="mt-8 text-center">
                 <p className="text-[#a8fbd3] font-mono text-[10px] uppercase tracking-[0.3em]">
-                  Captured: {new Date(images[selectedIndex].uploadedAt).toLocaleString()}
+                  Captured: 07/19/2025, {new Date(images[selectedIndex].uploadedAt).toLocaleTimeString()}
                 </p>
               </div>
             </motion.div>
