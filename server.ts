@@ -40,13 +40,6 @@ async function startServer() {
         const { blobs } = await list({ token });
         console.log(`Found ${blobs.length} blobs`);
 
-        const logo = blobs.find(b => b.pathname.includes('6953'));
-        if (logo) {
-          console.log("LOGO URL FOUND:", logo.url);
-        } else {
-          console.log("LOGO URL NOT FOUND in blobs");
-        }
-        
         // Filter for common image formats
         const images = blobs
           .filter(blob => blob.pathname.match(/\.(jpg|jpeg|png|webp|gif)$/i))
@@ -58,7 +51,7 @@ async function startServer() {
           }));
 
         console.log(`Returning ${images.length} images`);
-        res.json({ images, logoUrl: logo?.url });
+        res.json({ images });
       } catch (error) {
         console.error("Error listing blobs:", error);
         res.status(500).json({ 

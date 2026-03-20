@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Maximize2, Camera, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -15,6 +15,12 @@ export default function Gallery() {
   const [error, setError] = useState<string | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [showArchive, setShowArchive] = useState(false);
+  const [showExitButton, setShowExitButton] = useState(false);
+
+  const handleArchiveScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const scrollTop = e.currentTarget.scrollTop;
+    setShowExitButton(scrollTop > 400);
+  };
 
   useEffect(() => {
     if (showArchive || selectedIndex !== null) {
@@ -283,6 +289,7 @@ export default function Gallery() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[110] bg-black overflow-y-auto"
+            onScroll={handleArchiveScroll}
           >
             <div className="min-h-screen p-6 md:p-12">
               <div className="max-w-7xl mx-auto">
@@ -359,6 +366,39 @@ export default function Gallery() {
 
               </div>
             </div>
+
+            {/* Floating Exit Button (Apollo Choice) */}
+            <AnimatePresence>
+              {showExitButton && (
+                <motion.button
+                  initial={{ opacity: 0, x: 50, rotate: 5 }}
+                  animate={{ opacity: 1, x: 0, rotate: -2 }}
+                  exit={{ opacity: 0, x: 50, rotate: 5 }}
+                  whileHover={{ scale: 1.05, rotate: 0 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    setShowArchive(false);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="fixed bottom-10 right-10 z-[130] group cursor-pointer"
+                >
+                  {/* The "Blue Tape" */}
+                  <div className="absolute -top-4 -left-4 w-16 h-8 bg-blue-600/80 backdrop-blur-sm -rotate-12 shadow-lg mix-blend-screen pointer-events-none z-10" />
+                  
+                  {/* The Label */}
+                  <div className="bg-black border border-white/20 px-6 py-3 shadow-2xl flex items-center gap-3 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-white uppercase whitespace-nowrap">
+                      [ EXIT ARCHIVE ]
+                    </span>
+                    <div className="w-1.5 h-1.5 bg-[#a8fbd3] rounded-full animate-pulse" />
+                  </div>
+                  
+                  {/* Bottom Tape Piece */}
+                  <div className="absolute -bottom-2 -right-2 w-12 h-6 bg-blue-500/40 rotate-6 pointer-events-none" />
+                </motion.button>
+              )}
+            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>
