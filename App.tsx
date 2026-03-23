@@ -484,12 +484,12 @@ const App: React.FC = () => {
             Apollo Wrldx is a creative agency and experiential production partner building cultural infrastructure for diaspora communities. We've produced 30+ events across NYC, Dallas, and Atlanta, reaching 8,000+ attendees. Our work focuses on the intersection of music, fashion, and design, creating spaces where creativity thrives.
           </p>
           <a 
-            href="https://msm.apollowrldx.com" 
+            href="https://apollowrldx.com" 
             target="_blank" 
             rel="noopener noreferrer"
             className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#a8fbd3] hover:text-white transition-colors"
           >
-            Learn more at msm.apollowrldx.com
+            Learn more at apollowrldx.com
           </a>
         </div>
       </section>
@@ -552,7 +552,7 @@ const App: React.FC = () => {
                     </div>
                     <div>
                       <span className="block text-[10px] font-mono text-white/30 uppercase tracking-widest mb-1">Website</span>
-                      <a href="https://msm.apollowrldx.com" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-400 hover:text-[#a8fbd3] transition-colors">msm.apollowrldx.com</a>
+                      <a href="https://apollowrldx.com" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-400 hover:text-[#a8fbd3] transition-colors">apollowrldx.com</a>
                     </div>
                   </div>
                 </div>

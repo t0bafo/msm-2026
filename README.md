@@ -1,20 +1,24 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# MSM 2026: Mid-Summer Madness
 
-# Run and deploy your AI Studio app
+Official landing page for the 2026 Mid-Summer Madness festival by Apollo Wrldx.
+Learn more at: [msm.apollowrldx.com](https://msm.apollowrldx.com)
 
-This contains everything you need to run your app locally.
+## Overview
+A high-performance, immersive landing page built for Dallas' anchor weekend for diaspora communities. This site showcases the three-day festival where music, fashion, and design converge.
 
-View your app in AI Studio: https://ai.studio/apps/72b7937a-3fc0-475c-a136-ddd53c6fe6ae
+### Key Features
+- **Fluid Backgrounds:** Dynamic, interactive visual experiences.
+- **Event Discovery:** Detailed breakdown of the three-day programming.
+- **Partnership Portal:** Integrated inquiry system for brand collaborations.
+- **Immersive Gallery:** Visual storytelling of the MSM culture.
 
-## Run Locally
+## Tech Stack
+- **Frontend:** React, Vite, Tailwind CSS
+- **Animations:** Framer Motion
+- **Icons:** Lucide React
+- **Backend:** Express
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Getting Started
+1. Install dependencies: `npm install`
+2. Start development server: `npm run dev`
+3. Build for production: `npm run build`
